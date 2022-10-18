@@ -9,3 +9,5 @@
 *.inl text
 *.lua text
 *.bat text
+*.asm text
+*.inc text

@@ -1,36 +1,16 @@
-#if SYSTEM_WINDOWS
-
-int Main(int argc, char** argv)
-{
-	static_cast<void>(argc, argv);
-
-	// TODO: run your code, but please, please, please, not in this file.
-	// Just call a function here, or construct, run, and destruct you app.
-	// For example:
-	//	Application* pApplication = CreateApplication(argc, argv);
-	//	pApplication->Run();
-	//	delete pApplication;
-
-	return 0;
-}
-
-#if CONFIG_DIST
-
-#include <Windows.h>
-
-int APIENTRY WinMain(_In_ HINSTANCE hInst, _In_opt_ HINSTANCE hInstPrev, _In_ LPSTR lpCmdLine, _In_ int nCmdShow)
-{
-	static_cast<void>(hInst, hInstPrev, lpCmdLine, nCmdShow);
-	return Main(__argc, __argv);
-}
-
-#else // !CONFIG_DIST
+#include "EZ80Assembler.h"
+#include "Debug.h"
 
 int main(int argc, char** argv)
 {
-	return Main(argc, argv);
+	ez80::AssemblerInfo info;
+	info.inputFilepath = L"C:\\Workspace\\Programming\\Dev\\C++\\EZ80Assembler\\EZ80Assembler\\test\\test.asm";
+	info.outputFilepath = L"C:\\Workspace\\Programming\\Dev\\C++\\EZ80Assembler\\EZ80Assembler\\test\\TEST.8xp";
+	if (auto result = ez80::Assemble(info))
+	{
+		stdcout(result.error << '\n');
+		__debugbreak();
+	}
+
+	return 0;
 }
-
-#endif // CONFIG_DIST
-
-#endif // SYSTEM_WINDOWS
